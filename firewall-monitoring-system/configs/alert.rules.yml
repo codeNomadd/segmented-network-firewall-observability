@@ -1,0 +1,12 @@
+groups:
+  - name: firewall-alerts
+    rules:
+      - alert: FirewallEventSpike
+        expr: increase(iptables_total_events[5m]) > 500
+        for: 2m
+        labels:
+          severity: critical
+          team: security
+        annotations:
+          summary: "Firewall event spike detected"
+          description: "iptables_total_events increased by more than 500 within 5 minutes. This can indicate scanning or active attack traffic."

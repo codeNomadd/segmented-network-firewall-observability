@@ -1,0 +1,21 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - /etc/prometheus/alert.rules.yml
+
+scrape_configs:
+  - job_name: "firewall_exporter"
+    static_configs:
+      - targets:
+          - "localhost:9100"
+        labels:
+          service: "iptables-exporter"
+          environment: "prod"
+
+  # Optional host-level metrics endpoint
+  - job_name: "node_exporter"
+    static_configs:
+      - targets:
+          - "localhost:9100"
